@@ -4,3 +4,7 @@
 * PUSH
 * DELETE
 * Testing Request and Responses with POSTMAN
+* CRUD with MongoDB
+* Routing
+* Modeling
+
