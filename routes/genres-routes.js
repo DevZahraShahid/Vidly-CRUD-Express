@@ -1,3 +1,5 @@
+const auth = require("../middlewares/auth");
+const admin = require("../middlewares/admin");
 const { Genre } = require("../models/genres-model");
 const express = require("express");
 const router = express.Router();
@@ -13,8 +15,9 @@ router.get("/:id", async (req, res) => {
 });
 
 //POST
+// Only an authorized user can create the genre
 router.use(express.json());
-router.post("/", async (req, res) => {
+router.post("/", auth, async (req, res) => {
   const genre = new Genre({
     genre: req.body.genre,
   });
@@ -39,7 +42,8 @@ router.put("/:id", async (req, res) => {
 });
 
 // DELETE
-router.delete("/:id", async (req, res) => {
+//only an authorized user who is an Admin can delete the genre
+router.delete("/:id", [auth, admin], async (req, res) => {
   const genre = await Genre.findByIdAndRemove(req.params.id);
   if (!genre) return res.status(404).send(`ID: ${req.params.id} not found!`);
   res.send(genre);
