@@ -19,3 +19,5 @@
 - JWT
 - Configurations and config mapping
 - Middleware
+- Handling Rejected Promises
+- Express ASYNC Errors

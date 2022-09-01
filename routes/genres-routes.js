@@ -3,11 +3,18 @@ const admin = require("../middlewares/admin");
 const { Genre } = require("../models/genres-model");
 const express = require("express");
 const router = express.Router();
+const asyncMiddleware = require("../middlewares/async");
 
-router.get("/", async (req, res) => {
-  const genres = await Genre.find().sort("genre");
-  res.send(genres);
-});
+router.get(
+  "/",
+  // asyncMiddleware(
+  async (req, res) => {
+    throw new Error("Could not get the genres");
+    const genres = await Genre.find().sort("genre");
+    res.send(genres);
+  }
+  // )
+);
 router.get("/:id", async (req, res) => {
   const genre = await Genre.findById(req.params.id);
   if (!genre) return res.status(404).send(`ID: ${req.params.id} not found!`);
